@@ -12,7 +12,7 @@ When a new ticket is claimed or assigned from a queue, the status is automatical
 
 ### Close Ticket Record Page Action
 
-Copied over https://quip.com/XEPAEAnwCEh’s close case screen flow. The user can select to have the Ticket Closed Notification email template sent to the Submitted By user.
+Copied over https://quip.com/XEPAEAnwCEh ’s close case screen flow. The user can select to have the Ticket Closed Notification email template sent to the Submitted By user.
 
 ### Date/Time Closed
 
