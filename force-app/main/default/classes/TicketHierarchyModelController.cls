@@ -6,11 +6,24 @@ public with sharing class TicketHierarchyModelController {
     ) {
         try {
             return [
-                SELECT Id, Name, Parent_Ticket__c, Ultimate_Parent_ID__c, 
-                       OwnerId, Owner.Name, Status__c, Priority__c, 
-                       Subject__c, Description__c, Submitted_By__c, Submitted_By__r.Name, 
-                       Facility__c, Facility__r.Name, Location__c, Location__r.Name, 
-                       RecordTypeId, RecordType.Name
+                SELECT Id, 
+                       Name, 
+                       Parent_Ticket__c, 
+                       Ultimate_Parent_ID__c, 
+                       OwnerId, 
+                       Owner.Name, 
+                       Status__c, 
+                       Priority__c, 
+                       Subject__c, 
+                       Description__c, 
+                       Submitted_By__c, 
+                       Submitted_By__r.Name, 
+                       Facility__c, 
+                       Facility__r.Name, 
+                       Location__c, 
+                       Location__r.Name, 
+                       RecordTypeId, 
+                       RecordType.Name
                   FROM Ticket__c
                  WHERE Ultimate_Parent_ID__c = :ultimateParentId
                  ORDER BY Name ASC
