@@ -1,0 +1,79 @@
+<template>
+    <lightning-card title={cardTitle} icon-name={cardIconName}>
+
+        <!-- WHILE DATA IS LOADED -->
+        <template if:false={isLoading}>
+
+            <!-- TIER ONE -->
+            <h3 class="slds-text-heading_medium slds-var-p-around_medium">Tier One Ticket</h3>
+            <p class="slds-var-p-around_medium">
+                Ticket Number: {ultimateParentTicket.Name}&nbsp;
+                <lightning-button-icon 
+                    icon-name="action:preview" 
+                    variant="brand" 
+                    alternative-text="View Record" 
+                    class="slds-m-left_small" 
+                    data-id={ultimateParentTicket.Id} 
+                    data-subject={ultimateParentTicket.Subject__c} 
+                    title="View Record" 
+                    onclick={goToRecordPage}
+                ></lightning-button-icon><br />
+                {ultimateParentTicket.Subject__c}
+            </p>
+
+            <!-- TIER TWO -->
+            <h3 class="slds-text-heading_medium slds-var-p-around_medium">Tier Two Tickets</h3>
+            <template for:each={lstTierTwoTickets} for:item="tierTwoTicket">
+                <p class="slds-var-p-around_medium" key={tierTwoTicket.Id}>
+                    Ticket Number: {tierTwoTicket.Name}&nbsp;
+                    <lightning-button-icon 
+                        icon-name="action:preview" 
+                        variant="brand" 
+                        alternative-text="View Record" 
+                        class="slds-m-left_small" 
+                        data-id={tierTwoTicket.Id} 
+                        data-subject={tierTwoTicket.Subject__c} 
+                        title="View Record" 
+                        onclick={goToRecordPage}
+                    ></lightning-button-icon><br />
+                    {tierTwoTicket.Subject__c}<br />
+                    {tierTwoTicket.Description__c}
+                </p>
+            </template>
+
+            <!-- TIER THREE -->
+            <h3 class="slds-text-heading_medium slds-var-p-around_medium">Tier Three Tickets</h3>
+            <template for:each={mapTierThreeTickets} for:item="tierThreeRow">
+                <div key={tierThreeRow.parentId}>
+                    <p class="slds-var-p-around_medium">
+                        Tier Two Parent Ticket Id: {tierThreeRow.parentId}
+                    </p>
+                    <template for:each={tierThreeRow.childTickets} for:item="childTicket">
+                        <p class="slds-var-p-around_x-large" key={childTicket.Id}>
+                            Ticket Number: {childTicket.Name}&nbsp;
+                            <lightning-button-icon 
+                                icon-name="action:preview" 
+                                variant="brand" 
+                                alternative-text="View Record" 
+                                class="slds-m-left_small" 
+                                data-id={childTicket.Id} 
+                                data-subject={childTicket.Subject__c} 
+                                title="View Record" 
+                                onclick={goToRecordPage}
+                            ></lightning-button-icon><br />
+                            Subject: {childTicket.Subject__c}<br />
+                            Description: {childTicket.Description__c}
+                        </p>
+                    </template>
+                </div>
+            </template>
+
+        </template>
+
+        <!-- SPINNER ON LOAD -->
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="...loading"></lightning-spinner>
+        </template>
+
+    </lightning-card>
+</template>
