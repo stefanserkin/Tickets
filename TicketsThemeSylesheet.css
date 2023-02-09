@@ -1,0 +1,14 @@
+/* TicketsThemeSylesheet */
+
+.highlights, .slds-tabs_default__item, .slds-tabs_card {
+    background-color: grey !important;
+    color: green !important;
+}
+
+.slds-brand-band, .row-main {
+    background-image: url("https://cdn.dribbble.com/users/119313/screenshots/1675522/media/c2bf4fa4148be1268c7c6467fb831778.gif") !important;
+}
+
+.slds-accordion__section {
+    background-image: url("https://cdn.dribbble.com/users/119313/screenshots/1675522/media/c2bf4fa4148be1268c7c6467fb831778.gif") !important;
+}
