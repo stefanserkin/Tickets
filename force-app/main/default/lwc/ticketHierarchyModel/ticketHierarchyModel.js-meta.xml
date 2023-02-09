@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Ticket Hierarchy Model</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Ticket__c</object>
+            </objects>
+            <property name="cardTitle" label="Card Title" type="String" default="Ticket Hierarchy Model" required="true" />
+            <property name="cardIconName" label="Card Icon Name" type="String" default="standard:hierarchy" description="SLDS icon name" required="true" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
