@@ -110,6 +110,15 @@ export default class TicketHierarchyModel extends NavigationMixin(LightningEleme
     }
 
     /**
+     * @description refresh data from wire service
+     */
+    refreshData() {
+        this.isLoading = true;
+        refreshApex(this.wiredTickets);
+        this.isLoading = false;
+    }
+
+    /**
      * @description parse error and raise toast for user
      * @param error
      */
@@ -124,20 +133,11 @@ export default class TicketHierarchyModel extends NavigationMixin(LightningEleme
         }
         this.dispatchEvent(
             new ShowToastEvent({
-                title: 'Error loading contact',
+                title: 'Hmm... something went wrong',
                 message,
                 variant: 'error',
             }),
         );
-    }
-
-    /**
-     * @description refresh data from wire service
-     */
-    refreshData() {
-        this.isLoading = true;
-        refreshApex(this.wiredTickets);
-        this.isLoading = false;
     }
 
 }
