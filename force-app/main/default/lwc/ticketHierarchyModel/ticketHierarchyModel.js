@@ -133,7 +133,7 @@ export default class TicketHierarchyModel extends NavigationMixin(LightningEleme
         }
         this.dispatchEvent(
             new ShowToastEvent({
-                title: 'Hmm... something went wrong',
+                title: 'An error occurred',
                 message,
                 variant: 'error',
             }),
