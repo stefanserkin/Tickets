@@ -62,6 +62,14 @@ export default class TicketHierarchyModel extends NavigationMixin(LightningEleme
         this.wiredTickets = result;
         if (result.data) {
             let rows = JSON.parse( JSON.stringify(result.data) );
+            // Identify current ticket
+            rows.forEach(row => {
+                if (row.Id === this.recordId) {
+                    row.isCurrentRecord = true;
+                } else {
+                    row.isCurrentRecord = false;
+                }
+            });
             // Top level ticket is the one where the ultimate parent id is the record id
             this.ultimateParentTicket = rows.find(tk => (tk.Ultimate_Parent_ID__c === this.ultimateParentId));
             // Second tier is an array of children of the ultimate parent id
@@ -69,8 +77,9 @@ export default class TicketHierarchyModel extends NavigationMixin(LightningEleme
             // Third tier will be a nested array of a second tier id to its third tier child tickets
             this.lstTierTwoTickets.forEach(parentRow => {
                 let childTicketArray = rows.filter(r => r.Parent_Ticket__c === parentRow.Id);
-                this.mapTierThreeTickets.push({parentId: parentRow.Id, childTickets: childTicketArray});
+                this.mapTierThreeTickets.push({parentTicket: parentRow, childTickets: childTicketArray});
             });
+
             this.tickets = rows;
             this.error = undefined;
             this.isLoading = false;
