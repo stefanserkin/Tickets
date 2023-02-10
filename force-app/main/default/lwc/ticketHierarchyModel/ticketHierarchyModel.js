@@ -1,7 +1,8 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord } from 'lightning/uiRecordApi';
+import { refreshApex } from '@salesforce/apex';
 import getTicketsInHierarchy from '@salesforce/apex/TicketHierarchyModelController.getTicketsInHierarchy';
 
 import ULTIMATE_PARENT_ID_FIELD from '@salesforce/schema/Ticket__c.Ultimate_Parent_ID__c';
@@ -27,10 +28,10 @@ export default class TicketHierarchyModel extends NavigationMixin(LightningEleme
     /**
      * Stuff to actually do stuff with
      */
-    currentTicket;
-    ultimateParentId;
-    wiredTickets = [];
-    tickets;
+    @track currentTicket;
+    @track ultimateParentId;
+    @track wiredTickets = [];
+    @track tickets;
     // Tier one - single ticket
     ultimateParentTicket;
     // Tier two - an array of child tickets to the ultimate parent ticket
@@ -49,6 +50,7 @@ export default class TicketHierarchyModel extends NavigationMixin(LightningEleme
         } else if (data) {
             this.currentTicket = data;
             this.ultimateParentId = this.currentTicket.fields.Ultimate_Parent_ID__c.value;
+            refreshApex(this.wiredTickets);
         }
     }
 
@@ -60,6 +62,7 @@ export default class TicketHierarchyModel extends NavigationMixin(LightningEleme
     wiredTicketsInHierarchy(result) {
         this.isLoading = true;
         this.wiredTickets = result;
+        this.mapTierThreeTickets = [];
         if (result.data) {
             let rows = JSON.parse( JSON.stringify(result.data) );
             // Identify current ticket
@@ -126,6 +129,15 @@ export default class TicketHierarchyModel extends NavigationMixin(LightningEleme
                 variant: 'error',
             }),
         );
+    }
+
+    /**
+     * @description refresh data from wire service
+     */
+    refreshData() {
+        this.isLoading = true;
+        refreshApex(this.wiredTickets);
+        this.isLoading = false;
     }
 
 }
