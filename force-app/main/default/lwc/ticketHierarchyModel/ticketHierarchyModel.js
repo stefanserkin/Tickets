@@ -1,7 +1,8 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord } from 'lightning/uiRecordApi';
+import { refreshApex } from '@salesforce/apex';
 import getTicketsInHierarchy from '@salesforce/apex/TicketHierarchyModelController.getTicketsInHierarchy';
 
 import ULTIMATE_PARENT_ID_FIELD from '@salesforce/schema/Ticket__c.Ultimate_Parent_ID__c';
@@ -27,10 +28,10 @@ export default class TicketHierarchyModel extends NavigationMixin(LightningEleme
     /**
      * Stuff to actually do stuff with
      */
-    currentTicket;
-    ultimateParentId;
-    wiredTickets = [];
-    tickets;
+    @track currentTicket;
+    @track ultimateParentId;
+    @track wiredTickets = [];
+    @track tickets;
     // Tier one - single ticket
     ultimateParentTicket;
     // Tier two - an array of child tickets to the ultimate parent ticket
@@ -49,6 +50,7 @@ export default class TicketHierarchyModel extends NavigationMixin(LightningEleme
         } else if (data) {
             this.currentTicket = data;
             this.ultimateParentId = this.currentTicket.fields.Ultimate_Parent_ID__c.value;
+            refreshApex(this.wiredTickets);
         }
     }
 
@@ -60,8 +62,17 @@ export default class TicketHierarchyModel extends NavigationMixin(LightningEleme
     wiredTicketsInHierarchy(result) {
         this.isLoading = true;
         this.wiredTickets = result;
+        this.mapTierThreeTickets = [];
         if (result.data) {
             let rows = JSON.parse( JSON.stringify(result.data) );
+            // Identify current ticket
+            rows.forEach(row => {
+                if (row.Id === this.recordId) {
+                    row.isCurrentRecord = true;
+                } else {
+                    row.isCurrentRecord = false;
+                }
+            });
             // Top level ticket is the one where the ultimate parent id is the record id
             this.ultimateParentTicket = rows.find(tk => (tk.Ultimate_Parent_ID__c === this.ultimateParentId));
             // Second tier is an array of children of the ultimate parent id
@@ -69,8 +80,9 @@ export default class TicketHierarchyModel extends NavigationMixin(LightningEleme
             // Third tier will be a nested array of a second tier id to its third tier child tickets
             this.lstTierTwoTickets.forEach(parentRow => {
                 let childTicketArray = rows.filter(r => r.Parent_Ticket__c === parentRow.Id);
-                this.mapTierThreeTickets.push({parentId: parentRow.Id, childTickets: childTicketArray});
+                this.mapTierThreeTickets.push({parentTicket: parentRow, childTickets: childTicketArray});
             });
+
             this.tickets = rows;
             this.error = undefined;
             this.isLoading = false;
@@ -98,6 +110,15 @@ export default class TicketHierarchyModel extends NavigationMixin(LightningEleme
     }
 
     /**
+     * @description refresh data from wire service
+     */
+    refreshData() {
+        this.isLoading = true;
+        refreshApex(this.wiredTickets);
+        this.isLoading = false;
+    }
+
+    /**
      * @description parse error and raise toast for user
      * @param error
      */
@@ -112,7 +133,7 @@ export default class TicketHierarchyModel extends NavigationMixin(LightningEleme
         }
         this.dispatchEvent(
             new ShowToastEvent({
-                title: 'Error loading contact',
+                title: 'An error occurred',
                 message,
                 variant: 'error',
             }),

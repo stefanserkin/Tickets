@@ -1,73 +1,103 @@
 <template>
     <lightning-card title={cardTitle} icon-name={cardIconName}>
+        <!-- REFRESH DATA -->
+        <lightning-button-icon 
+			slot="actions" 
+			icon-name="utility:refresh"  
+			alternative-text="Refresh Component" 
+			title="Refresh"
+			onclick={refreshData}
+		><label></label>
+		</lightning-button-icon>
 
         <!-- WHILE DATA IS LOADED -->
         <template if:false={isLoading}>
 
             <!-- TIER ONE -->
-            <h3 class="slds-text-heading_medium slds-var-p-around_medium">Tier One Ticket</h3>
-            <p class="slds-var-p-around_medium">
-                Ticket Number: {ultimateParentTicket.Name}&nbsp;
-                <lightning-button-icon 
-                    icon-name="action:preview" 
-                    variant="brand" 
-                    alternative-text="View Record" 
-                    class="slds-m-left_small" 
-                    data-id={ultimateParentTicket.Id} 
-                    data-subject={ultimateParentTicket.Subject__c} 
-                    title="View Record" 
-                    onclick={goToRecordPage}
-                ></lightning-button-icon><br />
-                {ultimateParentTicket.Subject__c}
-            </p>
-
-            <!-- TIER TWO -->
-            <h3 class="slds-text-heading_medium slds-var-p-around_medium">Tier Two Tickets</h3>
-            <template for:each={lstTierTwoTickets} for:item="tierTwoTicket">
-                <p class="slds-var-p-around_medium" key={tierTwoTicket.Id}>
-                    Ticket Number: {tierTwoTicket.Name}&nbsp;
+            <lightning-layout horizontal-align="space">
+                <lightning-layout-item padding="around-small" size="12">
                     <lightning-button-icon 
-                        icon-name="action:preview" 
+                        if:false={ultimateParentTicket.isCurrentRecord} 
+                        icon-name="utility:setup_assistant_guide" 
                         variant="brand" 
                         alternative-text="View Record" 
-                        class="slds-m-left_small" 
-                        data-id={tierTwoTicket.Id} 
-                        data-subject={tierTwoTicket.Subject__c} 
+                        class="slds-m-right_small" 
+                        data-id={ultimateParentTicket.Id} 
+                        data-subject={ultimateParentTicket.Subject__c} 
                         title="View Record" 
                         onclick={goToRecordPage}
-                    ></lightning-button-icon><br />
-                    {tierTwoTicket.Subject__c}<br />
-                    {tierTwoTicket.Description__c}
-                </p>
-            </template>
+                    ></lightning-button-icon>
+                    Ticket Number: {ultimateParentTicket.Name}&nbsp;
+                    <span if:true={ultimateParentTicket.isCurrentRecord} class="slds-text-heading_large slds-text-color_destructive">
+                        &rArr;You are here.&lArr;
+                    </span><br /> 
+                    Opened Date: {ultimateParentTicket.Date_Time_Opened__c}<br /> 
+                    Subject: {ultimateParentTicket.Subject__c}<br /> 
+                    Status: {ultimateParentTicket.Status__c}<br > 
+                    Owner: {ultimateParentTicket.Owner.Name}
+                    <hr />
+                </lightning-layout-item>
+            </lightning-layout>
 
-            <!-- TIER THREE -->
-            <h3 class="slds-text-heading_medium slds-var-p-around_medium">Tier Three Tickets</h3>
+            <!-- TIER TWO -->
             <template for:each={mapTierThreeTickets} for:item="tierThreeRow">
-                <div key={tierThreeRow.parentId}>
-                    <p class="slds-var-p-around_medium">
-                        Tier Two Parent Ticket Id: {tierThreeRow.parentId}
-                    </p>
-                    <template for:each={tierThreeRow.childTickets} for:item="childTicket">
-                        <p class="slds-var-p-around_x-large" key={childTicket.Id}>
-                            Ticket Number: {childTicket.Name}&nbsp;
+                <lightning-layout horizontal-align="space" key={tierThreeRow.parentTicket}>
+                    <lightning-layout-item padding="around-small" size="2">
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="10">
+                        <lightning-button-icon 
+                            if:false={tierThreeRow.parentTicket.isCurrentRecord}
+                            icon-name="utility:setup_assistant_guide" 
+                            variant="brand" 
+                            alternative-text="View Record" 
+                            class="slds-m-right_small" 
+                            data-id={tierThreeRow.parentTicket.Id} 
+                            data-subject={tierThreeRow.parentTicket.Subject__c} 
+                            title="View Record" 
+                            onclick={goToRecordPage}
+                        ></lightning-button-icon>
+                        Ticket Number: {tierThreeRow.parentTicket.Name}&nbsp;
+                        <span if:true={tierThreeRow.parentTicket.isCurrentRecord} class="slds-text-heading_large slds-text-color_destructive">
+                            &rArr;You are here.&lArr;
+                        </span><br />
+                        Opened Date: {tierThreeRow.parentTicket.Date_Time_Opened__c}<br /> 
+                        Subject: {tierThreeRow.parentTicket.Subject__c}<br /> 
+                        Status: {tierThreeRow.parentTicket.Status__c}<br /> 
+                        Owner: {tierThreeRow.parentTicket.Owner.Name}
+                        <hr />
+                    </lightning-layout-item>
+                </lightning-layout>
+
+                <!-- TIER THREE -->
+                <template for:each={tierThreeRow.childTickets} for:item="childTicket">
+                    <lightning-layout key={childTicket.Id}>
+                        <lightning-layout-item padding="around-small" size="4">
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-small" size="8">
                             <lightning-button-icon 
-                                icon-name="action:preview" 
+                                if:false={childTicket.isCurrentRecord}
+                                icon-name="utility:setup_assistant_guide" 
                                 variant="brand" 
                                 alternative-text="View Record" 
-                                class="slds-m-left_small" 
+                                class="slds-m-right_small" 
                                 data-id={childTicket.Id} 
                                 data-subject={childTicket.Subject__c} 
                                 title="View Record" 
                                 onclick={goToRecordPage}
-                            ></lightning-button-icon><br />
-                            Subject: {childTicket.Subject__c}<br />
-                            Description: {childTicket.Description__c}
-                        </p>
-                    </template>
-                </div>
+                            ></lightning-button-icon>
+                            Ticket Number: {childTicket.Name}&nbsp;
+                            <span if:true={childTicket.isCurrentRecord} class="slds-text-heading_large slds-text-color_destructive">
+                                &rArr;You are here.&lArr;
+                            </span><br />
+                            Opened Date: {childTicket.Date_Time_Opened__c}<br /> 
+                            Subject: {childTicket.Subject__c}<br /> 
+                            Status: {childTicket.Status__c}<br /> 
+                            Owner: {childTicket.Owner.Name}
+                            <hr />
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
             </template>
-
         </template>
 
         <!-- SPINNER ON LOAD -->
