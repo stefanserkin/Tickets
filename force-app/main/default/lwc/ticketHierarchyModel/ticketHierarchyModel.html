@@ -30,11 +30,10 @@
                     Ticket Number: {ultimateParentTicket.Name}&nbsp;
                     <span if:true={ultimateParentTicket.isCurrentRecord} class="slds-text-heading_large slds-text-color_destructive">
                         &rArr;You are here.&lArr;
-                    </span><br /> 
-                    Opened Date: {ultimateParentTicket.Date_Time_Opened__c}<br /> 
-                    Subject: {ultimateParentTicket.Subject__c}<br /> 
-                    Status: {ultimateParentTicket.Status__c}<br > 
-                    Owner: {ultimateParentTicket.Owner.Name}
+                    </span><br />
+                    Subject: {ultimateParentTicket.Subject__c}<br />
+                    Description: {ultimateParentTicket.Description__c}<br />
+                    Status: {ultimateParentTicket.Status__c}
                     <hr />
                 </lightning-layout-item>
             </lightning-layout>
@@ -60,10 +59,9 @@
                         <span if:true={tierThreeRow.parentTicket.isCurrentRecord} class="slds-text-heading_large slds-text-color_destructive">
                             &rArr;You are here.&lArr;
                         </span><br />
-                        Opened Date: {tierThreeRow.parentTicket.Date_Time_Opened__c}<br /> 
-                        Subject: {tierThreeRow.parentTicket.Subject__c}<br /> 
-                        Status: {tierThreeRow.parentTicket.Status__c}<br /> 
-                        Owner: {tierThreeRow.parentTicket.Owner.Name}
+                        Subject: {tierThreeRow.parentTicket.Subject__c}<br />
+                        Description: {tierThreeRow.parentTicket.Description__c}<br />
+                        Status: {tierThreeRow.parentTicket.Status__c}
                         <hr />
                     </lightning-layout-item>
                 </lightning-layout>
@@ -89,10 +87,9 @@
                             <span if:true={childTicket.isCurrentRecord} class="slds-text-heading_large slds-text-color_destructive">
                                 &rArr;You are here.&lArr;
                             </span><br />
-                            Opened Date: {childTicket.Date_Time_Opened__c}<br /> 
-                            Subject: {childTicket.Subject__c}<br /> 
-                            Status: {childTicket.Status__c}<br /> 
-                            Owner: {childTicket.Owner.Name}
+                            Subject: {childTicket.Subject__c}<br />
+                            Description: {childTicket.Description__c}<br />
+                            Status: {childTicket.Status__c}
                             <hr />
                         </lightning-layout-item>
                     </lightning-layout>
