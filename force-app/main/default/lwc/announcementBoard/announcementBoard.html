@@ -1,0 +1,37 @@
+<template>
+    <lightning-card title={cardTitle} icon-name={cardIconName}>
+        <lightning-button-icon 
+            slot="actions"
+            icon-name="utility:refresh" 
+            title="Refresh Announcements"
+            onclick={handleRefresh}
+        ></lightning-button-icon>
+        <template if:true={announcements}>
+            <template for:each={announcements} for:item="a">
+                <lightning-layout key={a.Id}>
+                    <lightning-layout-item padding="around-small">
+                        <lightning-button-icon 
+                            icon-name="action:info" 
+                            title="More Information"
+                            onclick={handleMoreRowInfo}
+                            data-id={a.Id}
+                            data-name={a.Name}
+                            data-highlights={a.Highlights__c}
+                            data-details={a.Details__c}
+                        ></lightning-button-icon>
+                        <span if:true={a.Priority__c}>
+                            <lightning-icon 
+                                icon-name="standard:incident"
+                                title="High priority announcement"
+                                class="slds-var-m-left_x-small"
+                            ></lightning-icon>
+                        </span>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small">
+                        {a.Name}
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>
+        </template>
+    </lightning-card>
+</template>

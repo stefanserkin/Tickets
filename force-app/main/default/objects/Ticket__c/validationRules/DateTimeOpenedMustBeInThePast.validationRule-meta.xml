@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DateTimeOpenedMustBeInThePast</fullName>
+    <active>true</active>
+    <description>The Date/Time Opened value can not be in the future</description>
+    <errorConditionFormula>Date_Time_Opened__c &gt; NOW()</errorConditionFormula>
+    <errorDisplayField>Date_Time_Opened__c</errorDisplayField>
+    <errorMessage>Date/Time Opened can not be in the future</errorMessage>
+</ValidationRule>

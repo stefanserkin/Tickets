@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Priority_End_Date_Time__c</fullName>
+    <description>If set, the priority flag will be ignored after this date/time has passed</description>
+    <externalId>false</externalId>
+    <inlineHelpText>If set, the priority flag will be ignored after this date/time has passed</inlineHelpText>
+    <label>Priority End Date/Time</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

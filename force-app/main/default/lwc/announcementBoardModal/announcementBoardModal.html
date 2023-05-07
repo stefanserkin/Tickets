@@ -1,0 +1,26 @@
+<template>
+    <lightning-modal-header label={name}></lightning-modal-header>
+    <lightning-modal-body>
+        <div>
+            <h2 class="slds-text-heading_medium">
+                Highlights
+            </h2>
+            <lightning-formatted-rich-text
+                value={highlights}
+                class="slds-var-m-around_medium"
+            ></lightning-formatted-rich-text>
+        </div>
+        <div>
+            <h2 class="slds-text-heading_medium">
+                Details
+            </h2>
+            <lightning-formatted-rich-text
+                value={details}
+                class="slds-var-m-around_medium"
+            ></lightning-formatted-rich-text>
+        </div>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <lightning-button label="OK" onclick={handleOkay}></lightning-button>
+    </lightning-modal-footer>
+</template>

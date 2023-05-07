@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Related_Record_ID__c</fullName>
+    <description>Returns the record ID of the record related to this topic</description>
+    <externalId>false</externalId>
+    <formula>CASE( Related_Record_Type__c,
+ &quot;Announcement&quot;, Announcement__c,
+ &quot;Article&quot;, Article__c,
+ &quot;Publication&quot;, Publication__c,
+ &quot;Ticket&quot;, Ticket__c,
+ &quot;&quot;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Returns the record ID of the record related to this topic</inlineHelpText>
+    <label>Related Record ID</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

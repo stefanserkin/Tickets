@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Affected_Department__c</fullName>
+    <externalId>false</externalId>
+    <label>Affected Departments</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Accounting/Finance</fullName>
+                <default>false</default>
+                <label>Accounting/Finance</label>
+            </value>
+            <value>
+                <fullName>AGUA</fullName>
+                <default>false</default>
+                <label>AGUA</label>
+            </value>
+            <value>
+                <fullName>Aquatics</fullName>
+                <default>false</default>
+                <label>Aquatics</label>
+            </value>
+            <value>
+                <fullName>Camps</fullName>
+                <default>false</default>
+                <label>Camps</label>
+            </value>
+            <value>
+                <fullName>Community Programs</fullName>
+                <default>false</default>
+                <label>Community Programs</label>
+            </value>
+            <value>
+                <fullName>Development</fullName>
+                <default>false</default>
+                <label>Development</label>
+            </value>
+            <value>
+                <fullName>Engineering</fullName>
+                <default>false</default>
+                <label>Engineering</label>
+            </value>
+            <value>
+                <fullName>Executive Suite</fullName>
+                <default>false</default>
+                <label>Executive Suite</label>
+            </value>
+            <value>
+                <fullName>Guest Services</fullName>
+                <default>false</default>
+                <label>Guest Services</label>
+            </value>
+            <value>
+                <fullName>Housekeeping</fullName>
+                <default>false</default>
+                <label>Housekeeping</label>
+            </value>
+            <value>
+                <fullName>Human Resources</fullName>
+                <default>false</default>
+                <label>Human Resources</label>
+            </value>
+            <value>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+                <label>Marketing</label>
+            </value>
+            <value>
+                <fullName>Membership</fullName>
+                <default>false</default>
+                <label>Membership</label>
+            </value>
+            <value>
+                <fullName>Membership Billing</fullName>
+                <default>false</default>
+                <label>Membership Billing</label>
+            </value>
+            <value>
+                <fullName>Registration</fullName>
+                <default>false</default>
+                <label>Registration</label>
+            </value>
+            <value>
+                <fullName>REP</fullName>
+                <default>false</default>
+                <label>REP</label>
+            </value>
+            <value>
+                <fullName>Sports</fullName>
+                <default>false</default>
+                <label>Sports</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>
