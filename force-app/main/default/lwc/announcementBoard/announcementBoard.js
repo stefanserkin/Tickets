@@ -54,9 +54,7 @@ export default class AnnouncementBoard extends LightningElement {
         console.log(':::: row highlights: ' + row.highlights);
         console.log(':::: row highlights: ' + row.details);
         const result = await AnnouncementBoardModal.open({
-            // `label` is not included here in this example.
-            // it is set on lightning-modal-header instead
-            size: 'large',
+            size: 'small',
             description: 'More information about the announcement',
             name: row.name,
             highlights: row.highlights,
